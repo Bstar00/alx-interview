@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """
-Defines function that returns a list of lists of integers
-representing the Pascal's triangle of n
+ This Defines a function that returns a list of lists of integers
+representing Pascal's triangle of n
 """
 
 
 def pascal_triangle(n):
     """
-    Creates a list of lists of integers representing Pascal's triangle
+    It creates a list of lists of integers representing Pascal's triangle
 
     parameters:
         n [int]:
@@ -18,7 +18,7 @@ def pascal_triangle(n):
             representation of Pascal's triangle
     """
     if type(n) is not int:
-        raise TypeError("n must be an integer")
+        raise TypeError('n must be an integer')
     triangle = []
     if n <= 0:
         return triangle
