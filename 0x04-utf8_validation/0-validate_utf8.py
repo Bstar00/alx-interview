@@ -7,8 +7,8 @@
 def validUTF8(data):
     """ Check if the given data is a valid UTF-8 encoding. """
     try:
-        masked_data = [n & 255 for n in data]
-        bytes(masked_data).decode("UTF-8")
+        masked_bytes = [n & 255 for n in data]
+        bytes(masked_bytes).decode("UTF-8")
         return True
     except Exception:
         return False
