@@ -2,46 +2,26 @@
 
 const request = require('request');
 
-function fetchCharacterNames(characterUrls, index) {
-  if (index === characterUrls.length) {
-    return;
-  }
-
-  request(characterUrls[index], (error, response, body) => {
-    if (error) {
-      console.error(`Error fetching character: ${error}`);
+const req = (arr, i) => {
+  if (i === arr.length) return;
+  request(arr[i], (err, response, body) => {
+    if (err) {
+      throw err;
     } else {
-      try {
-        const character = JSON.parse(body);
-        console.log(`Character Name: ${character.name}`);
-      } catch (parseError) {
-        console.error(`Error parsing character data: ${parseError}`);
-      }
+      console.log(JSON.parse(body).name);
+      req(arr, i + 1);
     }
-
-    fetchCharacterNames(characterUrls, index + 1);
   });
-}
+};
 
-const filmId = process.argv[2];
-
-if (!filmId) {
-  console.error('Usage: node script.js <filmId>');
-  process.exit(1);
-}
-
-const filmUrl = `https://swapi-api.hbtn.io/api/films/${filmId}`;
-
-request(filmUrl, (error, response, body) => {
-  if (error) {
-    console.error(`Error fetching film: ${error}`);
-  } else {
-    try {
-      const film = JSON.parse(body);
-      const characterUrls = film.characters;
-      fetchCharacterNames(characterUrls, 0);
-    } catch (parseError) {
-      console.error(`Error parsing film data: ${parseError}`);
+request(
+  `https://swapi-api.hbtn.io/api/films/${process.argv[2]}`,
+  (err, response, body) => {
+    if (err) {
+      throw err;
+    } else {
+      const chars = JSON.parse(body).characters;
+      req(chars, 0);
     }
   }
-});
+);
