@@ -1,21 +1,14 @@
 #!/usr/bin/python3
-""" Minimum Operations
-    """
+""" Lockboxes """
 
 
-def minOperations(n: int) -> int:
-    """ Minimum Operations needed to get n H characters """
-    next = 'H'
-    body = 'H'
-    op = 0
-    while (len(body) < n):
-        if n % len(body) == 0:
-            op += 2
-            next = body
-            body += body
+def canUnlockAll(boxes):
+    """ LockBoxes Function """
+    T = []
+    for i in range(1, len(boxes)):
+        order = [T.extend(x) for x in boxes[:i] + boxes[i + 1:]]
+        if i in T:
+            T = []
         else:
-            op += 1
-            body += next
-    if len(body) != n:
-        return 0
-    return op
+            return False
+    return True
